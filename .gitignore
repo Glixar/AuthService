@@ -1,0 +1,197 @@
+## ------------------------
+## User-specific files
+## ------------------------
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# MonoDevelop/Xamarin Studio
+*.userprefs
+
+## ------------------------
+## Build results
+## ------------------------
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## ------------------------
+## Visual Studio cache/options
+## ------------------------
+.vs/
+
+## ------------------------
+## JetBrains Rider / IntelliJ
+## ------------------------
+# Основная папка IDE в корне
+.idea/
+# Любые вложенные .idea в подпроектах
+**/.idea/
+# Rider/IntelliJ project files
+*.sln.iml
+# Персональные DotSettings для плагинов
+.idea/.idea.DotSettings
+
+## ------------------------
+## ASP.NET Scaffolding
+## ------------------------
+ScaffoldingReadMe.txt
+
+## ------------------------
+## Publish outputs
+## ------------------------
+publish/
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+## ------------------------
+## NuGet
+## ------------------------
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+!**/[Pp]ackages/src/
+*.nuget.props
+*.nuget.targets
+artifacts/
+
+## ------------------------
+## OS junk (Windows / macOS / Linux)
+## ------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+.AppleDouble
+.LSOverride
+*~
+
+## ------------------------
+## Logs
+## ------------------------
+*.log
+logs/
+log/
+
+## ------------------------
+## Environment / secrets
+## ------------------------
+.env
+.env.*
+*.local
+*.local.*
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+## ------------------------
+## Coverage / Test results
+## ------------------------
+coverage/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+## ------------------------
+## Docker-specific
+## ------------------------
+docker-compose.override.yml
+docker-compose.local.yml
+.docker/
+# .dockerignore лучше не игнорировать, чтобы он был в репозитории
+# .dockerignore
+
+## ------------------------
+## PostgreSQL (локальные данные)
+## ------------------------
+pgdata/
+postgres-data/
+**/pgdata/
+**/postgres-data/
+*.sql
+*.dump
+*.backup
+
+## ------------------------
+## Redis (локальные данные)
+## ------------------------
+redis-data/
+**/redis-data/
+dump.rdb
+appendonly.aof
+
+## ------------------------
+## Frontend (React/Vue/Angular)
+## ------------------------
+node_modules/
+dist/
+build/
+.cache/
+.npm/
+.yarn/
+.pnp/
+.pnp.js
+*.tsbuildinfo
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# Vue-specific
+.vuepress/dist
+.vite/
+vite.config.ts.timestamp-*
+
+# Angular-specific
+.angular/
+*.ngsummary.json
+
+## ------------------------
+## CI/CD Configs (чтобы не утекли чувствительные файлы)
+## ------------------------
+# GitHub Actions secrets или временные артефакты
+.github/secrets/
+.github/workflows/temp-*.yml
+
+# Azure DevOps
+.azure-pipelines.local.yml
+azure-pipelines.secret.yml
+
+# CI Build artifacts
+*.artifact
+*.artifact.zip
+
+## ------------------------
+## Прочее
+## ------------------------
+# Python
+__pycache__/
+*.pyc
+
+# MSBuild Binary log
+*.binlog
+
+# Local history (Rider/VS/VS Code)
+.localhistory/
+.vshistory/
