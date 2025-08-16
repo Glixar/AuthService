@@ -40,4 +40,16 @@ public sealed class AuthController : ControllerBase
         Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout(
+        [FromBody] LogoutRequest request,
+        [FromServices] LogoutHandler handler,
+        [FromServices] ILogger<AuthController> logger,
+        CancellationToken ct)
+    {
+        LogoutCommand command = new(request.RefreshToken, request.AllDevices);
+        Result<LogoutResponse, ErrorList> result = await handler.Handle(command, ct);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
+    }
 }
