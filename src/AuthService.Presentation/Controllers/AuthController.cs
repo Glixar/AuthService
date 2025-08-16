@@ -64,4 +64,17 @@ public sealed class AuthController : ControllerBase
         Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
+
+    [HttpPost("check-email")]
+    [AllowAnonymous]
+    public async Task<IActionResult> CheckEmail(
+        [FromBody] CheckEmailRequest request,
+        [FromServices] CheckEmailHandler handler,
+        [FromServices] ILogger<AuthController> logger,
+        CancellationToken ct)
+    {
+        CheckEmailCommand command = new(request.Email);
+        Result<CheckEmailResponse, ErrorList> result = await handler.Handle(command, ct);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
+    }
 }
