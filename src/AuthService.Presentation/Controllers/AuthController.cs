@@ -4,7 +4,6 @@ using AuthService.Contracts.Requests.Auth;
 using AuthService.Contracts.Responses;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SharedKernel;
@@ -50,6 +49,19 @@ public sealed class AuthController : ControllerBase
     {
         LogoutCommand command = new(request.RefreshToken, request.AllDevices);
         Result<LogoutResponse, ErrorList> result = await handler.Handle(command, ct);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
+    }
+
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register(
+        [FromBody] RegisterRequest request,
+        [FromServices] RegisterHandler handler,
+        [FromServices] ILogger<AuthController> logger,
+        CancellationToken ct)
+    {
+        RegisterCommand command = new RegisterCommand(request.Email, request.Password, request.FullName);
+        Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 }
