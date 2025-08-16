@@ -1,5 +1,6 @@
 using AuthService.Application.Commands.Auth.Commands;
 using AuthService.Application.Commands.Auth.Handlers;
+using AuthService.Contracts.Requests.Auth;
 using AuthService.Contracts.Responses;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +24,19 @@ public sealed class AuthController : ControllerBase
         CancellationToken ct)
     {
         LoginCommand command = new(request.Email, request.Password);
+        Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
+        return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
+    }
+
+    [HttpPost("refresh")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RefreshTokens(
+        [FromBody] RefreshTokensRequest request,
+        [FromServices] RefreshTokensHandler handler,
+        [FromServices] ILogger<AuthController> logger,
+        CancellationToken ct)
+    {
+        RefreshTokensCommand command = new(request.RefreshToken);
         Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
