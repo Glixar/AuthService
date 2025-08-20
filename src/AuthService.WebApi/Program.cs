@@ -1,3 +1,7 @@
+using AuthService.Application;
+using AuthService.Infrastructure.Postgres;
+using AuthService.Presentation;
+
 namespace AuthService.WebApi;
 
 internal static class Program
@@ -6,7 +10,16 @@ internal static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services
+            .AddProgramDependencies()
+            .AddPostgresInfrastructure()
+            .AddAccountsInfrastructure()
+            .AddApplication()
+            .AddAccountsPresentation()
+            .AddAccountsModule(builder.Configuration);
+
         var app = builder.Build();
+
 
         if (app.Environment.IsDevelopment())
         {
