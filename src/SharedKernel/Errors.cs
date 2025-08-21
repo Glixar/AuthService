@@ -81,4 +81,12 @@ public static class Errors
                     ? "Произошла непредвиденная ошибка"
                     : message);
     }
+    
+    public static class User
+    {
+        public static Error InvalidCredentials() =>
+            Error.Validation(
+                "core.auth.user.validate.credentials-invalid",
+                "Неверные учётные данные");
+    }
 }
