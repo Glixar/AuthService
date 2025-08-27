@@ -1,4 +1,6 @@
+using AuthService.Application.Abstractions;
 using AuthService.Contracts.Options;
+using AuthService.Presentation.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace AuthService.WebApi;
@@ -18,6 +20,7 @@ public static class DependencyInjection
                 "Jwt options are invalid");
 
         services.AddHttpContextAccessor();
+        services.AddScoped<ICurrentUser, HttpCurrentUser>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opts =>
