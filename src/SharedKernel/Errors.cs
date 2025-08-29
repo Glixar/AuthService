@@ -81,12 +81,25 @@ public static class Errors
                     ? "Произошла непредвиденная ошибка"
                     : message);
     }
-    
+
     public static class User
     {
         public static Error InvalidCredentials() =>
             Error.Validation(
                 "core.auth.user.validate.credentials-invalid",
                 "Неверные учётные данные");
+    }
+
+    public static class Tokens
+    {
+        public static Error ExpiredToken() =>
+            Error.Validation(
+                "core.auth.token.refresh.expired",
+                "Срок действия токена истёк");
+
+        public static Error InvalidToken() =>
+            Error.Validation(
+                "core.auth.token.validate.invalid",
+                "Токен недействителен");
     }
 }
