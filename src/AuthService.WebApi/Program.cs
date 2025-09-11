@@ -1,6 +1,7 @@
 using AuthService.Application;
 using AuthService.Infrastructure.Postgres;
 using AuthService.Presentation;
+using AuthService.WebApi.Middlewares;
 
 namespace AuthService.WebApi;
 
@@ -20,6 +21,7 @@ internal static class Program
 
         var app = builder.Build();
 
+        app.UseExceptionMiddleware();
 
         if (app.Environment.IsDevelopment())
         {

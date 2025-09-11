@@ -19,6 +19,7 @@ public static class DependencyInjection
                      && !string.IsNullOrWhiteSpace(o.Key),
                 "Jwt options are invalid");
 
+
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpCurrentUser>();
 
