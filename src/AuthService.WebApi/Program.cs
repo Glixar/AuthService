@@ -2,6 +2,7 @@ using AuthService.Application;
 using AuthService.Infrastructure.Postgres;
 using AuthService.Presentation;
 using AuthService.WebApi.Middlewares;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.WebApi;
 

@@ -1,4 +1,5 @@
 using AuthService.Application.Abstractions;
+using AuthService.Contracts.Models;
 using AuthService.Contracts.Options;
 using AuthService.Presentation.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,6 +20,7 @@ public static class DependencyInjection
                      && !string.IsNullOrWhiteSpace(o.Key),
                 "Jwt options are invalid");
 
+        // Политики на Permission (динамические)
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpCurrentUser>();
@@ -28,6 +30,7 @@ public static class DependencyInjection
             {
                 JwtOptions jwt = configuration.GetSection(JwtOptions.SECTION_NAME).Get<JwtOptions>()!;
                 opts.MapInboundClaims = false;
+                opts.TokenValidationParameters = TokenValidationParametersFactory.CreateWithLifeTime(jwt);
             });
 
         services.AddAuthorization();
