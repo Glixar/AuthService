@@ -1,5 +1,7 @@
+using AuthService.Application.Abstractions;
 using AuthService.Contracts.Options;
 using AuthService.Domain;
+using AuthService.Infrastructure.Postgres.IdentityManagers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -12,6 +14,8 @@ public static class DependencyInjection
     {
         services.AddOptions<JwtOptions>()
             .BindConfiguration(JwtOptions.SECTION_NAME);
+
+        services.AddTransient<ITokenProvider, JwtTokenProvider>();
 
         services.RegisterIdentity();
         return services;
@@ -26,6 +30,8 @@ public static class DependencyInjection
             })
             .AddRoles<Role>()
             .AddEntityFrameworkStores<PostgresDbContext>();
+
+        services.AddScoped<IRefreshSessionManager, RefreshSessionManager>();
     }
 
     public static IServiceCollection AddPostgresInfrastructure(this IServiceCollection services)
@@ -55,6 +61,10 @@ public static class DependencyInjection
             opt.EnableSensitiveDataLogging();
 #endif
         });
+
+        // менеджеры прав и аккаунтов
+        services.AddScoped<IPermissionManager, PermissionManager>();
+        services.AddScoped<PermissionManager>();
 
         return services;
     }
