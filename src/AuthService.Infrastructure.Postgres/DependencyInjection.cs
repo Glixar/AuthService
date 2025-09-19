@@ -31,6 +31,7 @@ public static class DependencyInjection
             .AddRoles<Role>()
             .AddEntityFrameworkStores<PostgresDbContext>();
 
+        services.AddScoped<RolePermissionManager>();
         services.AddScoped<IRefreshSessionManager, RefreshSessionManager>();
     }
 
