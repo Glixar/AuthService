@@ -2,6 +2,8 @@ using AuthService.Application.Abstractions;
 using AuthService.Contracts.Options;
 using AuthService.Domain;
 using AuthService.Infrastructure.Postgres.IdentityManagers;
+using AuthService.Infrastructure.Postgres.IdentityValidators;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -23,10 +25,19 @@ public static class DependencyInjection
 
     private static void RegisterIdentity(this IServiceCollection services)
     {
+        // Кастомный валидатор, который убирает требование уникальности UserName.
+        // Все остальные стандартные проверки (формат, e-mail и т.д.) остаются.
+        services.AddScoped<IUserValidator<User>, UserValidatorAllowDuplicateUserName>();
+
         services
             .AddIdentityCore<User>(options =>
             {
                 options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    "0123456789" +
+                    "-._@+ " +
+                    "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
             })
             .AddRoles<Role>()
             .AddEntityFrameworkStores<PostgresDbContext>();
