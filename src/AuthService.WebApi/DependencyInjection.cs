@@ -2,7 +2,9 @@ using AuthService.Application.Abstractions;
 using AuthService.Contracts.Models;
 using AuthService.Contracts.Options;
 using AuthService.Presentation.Infrastructure;
+using AuthService.Presentation.Permissions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthService.WebApi;
 
@@ -21,6 +23,8 @@ public static class DependencyInjection
                 "Jwt options are invalid");
 
         // Политики на Permission (динамические)
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        services.AddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpCurrentUser>();
