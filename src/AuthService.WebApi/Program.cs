@@ -12,6 +12,12 @@ internal static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Отключаем авто-400 от MVC, используем свою валидацию через фильтры/мидлвари
+        builder.Services.Configure<ApiBehaviorOptions>(options =>
+        {
+            options.SuppressModelStateInvalidFilter = true;
+        });
+
         builder.Services
             .AddProgramDependencies()
             .AddPostgresInfrastructure()
