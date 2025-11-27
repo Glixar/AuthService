@@ -2,6 +2,7 @@ using AuthService.Application.Commands.Auth.Commands;
 using AuthService.Application.Commands.Auth.Handlers;
 using AuthService.Contracts.Requests.Auth;
 using AuthService.Contracts.Responses;
+using AuthService.Presentation.Permissions;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace AuthService.Presentation.Controllers;
 [Route("api/v1/auth")]
 public sealed class AuthController : ControllerBase
 {
+    /// <summary>Логин. Возвращает пару токенов (как и register).</summary>
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(
@@ -27,6 +29,7 @@ public sealed class AuthController : ControllerBase
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
+    /// <summary>Обновление access/refresh токенов.</summary>
     [HttpPost("refresh")]
     [AllowAnonymous]
     public async Task<IActionResult> RefreshTokens(
@@ -40,6 +43,10 @@ public sealed class AuthController : ControllerBase
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
+    /// <summary>
+    ///     Логаут. Инвалидирует текущую сессию (или все, если allDevices = true).
+    /// </summary>
+    [Permission("auth.service")]
     [HttpPost("logout")]
     public async Task<IActionResult> Logout(
         [FromBody] LogoutRequest request,
@@ -52,6 +59,9 @@ public sealed class AuthController : ControllerBase
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
+    /// <summary>
+    ///     Регистрация пользователя. Возвращает пару токенов (как и login).
+    /// </summary>
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<IActionResult> Register(
@@ -60,11 +70,12 @@ public sealed class AuthController : ControllerBase
         [FromServices] ILogger<AuthController> logger,
         CancellationToken ct)
     {
-        RegisterCommand command = new RegisterCommand(request.Email, request.Password, request.FullName);
+        RegisterCommand command = new(request.Email, request.Password, request.FullName);
         Result<TokensResponse, ErrorList> result = await handler.Handle(command, ct);
         return result.IsFailure ? result.Error.ToResponse() : Ok(result.Value);
     }
 
+    /// <summary>Проверка существования пользователя по email.</summary>
     [HttpPost("check-email")]
     [AllowAnonymous]
     public async Task<IActionResult> CheckEmail(
