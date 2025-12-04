@@ -24,6 +24,22 @@ internal static class Program
             options.SuppressModelStateInvalidFilter = true;
         });
 
+        // Добавляем сервисы Aspire
+        //builder.AddServiceDefaults();
+
+        // Читаем origin из переменной окружения
+        var frontendOrigin = builder.Configuration["FRONTEND_ORIGIN"] ?? "http://localhost:5173";
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontendApp", policy =>
+            {
+                policy
+                    .WithOrigins(frontendOrigin) // Разрешить источник фронтенда
+                    .AllowAnyHeader()            // Любой заголовок
+                    .AllowAnyMethod();           // GET, POST, PUT, DELETE
+            });
+        });
+
         // Регистрируем OpenSearchOptions через стандартный Options-паттерн
         builder.Services
             .AddOptions<OpenSearchOptions>()
@@ -96,6 +112,10 @@ internal static class Program
                 opts.SwaggerEndpoint("/openapi/v1.json", "AuthService API");
             });
         }
+
+        app.UseCors("AllowFrontendApp");
+
+        //app.MapDefaultEndpoints();
 
         app.UseAuthentication();
         app.UseAuthorization();
