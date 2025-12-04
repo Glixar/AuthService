@@ -1,6 +1,6 @@
 using AuthService.Application.Commands.Auth.Commands;
 using AuthService.Application.Commands.Auth.Handlers;
-using AuthService.Contracts.Requests.Auth;
+using AuthService.Contracts.Requests;
 using AuthService.Contracts.Responses;
 using AuthService.Presentation.Permissions;
 using CSharpFunctionalExtensions;
