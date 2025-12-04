@@ -1,7 +1,7 @@
 using AuthService.Application.Commands.AdminPanel.Commands;
 using AuthService.Application.Commands.AdminPanel.Handlers;
-using AuthService.Contracts.Requests.AdminPanel;
-using AuthService.Contracts.Responses.AdminPanel;
+using AuthService.Contracts.Requests;
+using AuthService.Contracts.Responses;
 using AuthService.Presentation.Permissions;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

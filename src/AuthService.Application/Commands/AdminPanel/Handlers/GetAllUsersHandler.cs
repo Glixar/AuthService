@@ -1,6 +1,6 @@
 using AuthService.Application.Abstractions;
 using AuthService.Application.Commands.AdminPanel.Commands;
-using AuthService.Contracts.Responses.AdminPanel;
+using AuthService.Contracts.Responses;
 using AuthService.Domain;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Identity;
