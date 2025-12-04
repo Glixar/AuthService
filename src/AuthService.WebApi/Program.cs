@@ -25,7 +25,7 @@ internal static class Program
         });
 
         // Добавляем сервисы Aspire
-        //builder.AddServiceDefaults();
+        builder.AddServiceDefaults();
 
         // Читаем origin из переменной окружения
         var frontendOrigin = builder.Configuration["FRONTEND_ORIGIN"] ?? "http://localhost:5173";
@@ -115,7 +115,7 @@ internal static class Program
 
         app.UseCors("AllowFrontendApp");
 
-        //app.MapDefaultEndpoints();
+        app.MapDefaultEndpoints();
 
         app.UseAuthentication();
         app.UseAuthorization();
