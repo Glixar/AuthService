@@ -1,4 +1,5 @@
-﻿using AuthService.MigrationsJob.Extensions;
+﻿using System.Text;
+using AuthService.MigrationsJob.Extensions;
 using AuthService.MigrationsJob.Options;
 using AuthService.MigrationsJob.Services;
 using AuthService.MigrationsJob.Services.Errors;
@@ -25,6 +26,10 @@ namespace AuthService.MigrationsJob
         {
             var builder = Host.CreateApplicationBuilder(args);
 
+            // Установка кодировки консоли
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
+
             builder.Logging.ClearProviders();
             builder.Logging.AddSimpleConsole(o =>
             {
@@ -37,6 +42,7 @@ namespace AuthService.MigrationsJob
                 .AddJsonFile(
                     $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json",
                     optional: true)
+                .AddUserSecrets<Program>()
                 .AddEnvironmentVariables();
 
             builder.Services.AddAuthMigrationsOptions(builder.Configuration);
