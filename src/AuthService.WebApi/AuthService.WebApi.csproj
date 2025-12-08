@@ -24,12 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\.dockerignore">
-      <Link>.dockerignore</Link>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\AuthService.ServiceDefaults\AuthService.ServiceDefaults.csproj" />
     <ProjectReference Include="..\AuthService.Domain\AuthService.Domain.csproj"/>
     <ProjectReference Include="..\AuthService.Infrastructure.Postgres\AuthService.Infrastructure.Postgres.csproj"/>
     <ProjectReference Include="..\AuthService.Presentation\AuthService.Presentation.csproj"/>

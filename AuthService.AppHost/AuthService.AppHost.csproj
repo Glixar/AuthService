@@ -1,0 +1,15 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.0.2">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UserSecretsId>88949d80-9078-4786-a1ae-17862ee13fcb</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\src\AuthService.WebApi\AuthService.WebApi.csproj" />
+      <ProjectReference Include="..\tools\AuthService.MigrationsJob\AuthService.MigrationsJob.csproj" />
+    </ItemGroup>
+
+</Project>

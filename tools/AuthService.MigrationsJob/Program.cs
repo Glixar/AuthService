@@ -26,6 +26,8 @@ namespace AuthService.MigrationsJob
         {
             var builder = Host.CreateApplicationBuilder(args);
 
+            builder.AddServiceDefaults();
+
             // Установка кодировки консоли
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;

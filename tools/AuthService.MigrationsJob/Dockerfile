@@ -5,15 +5,16 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["tools/AuthService.MigrationsJob/AuthService.MigrationsJob.csproj", "tools/AuthService.MigrationsJob/"]
-COPY ["src/SharedKernel/SharedKernel.csproj", "src/SharedKernel/"]
-COPY ["src/AuthService.Domain/AuthService.Domain.csproj", "src/AuthService.Domain/"]
-COPY ["src/AuthService.Contracts/AuthService.Contracts.csproj", "src/AuthService.Contracts/"]
-COPY ["src/AuthService.Application/AuthService.Application.csproj", "src/AuthService.Application/"]
-COPY ["src/AuthService.Infrastructure.Postgres/AuthService.Infrastructure.Postgres.csproj", "src/AuthService.Infrastructure.Postgres/"]
-RUN dotnet restore "tools/AuthService.MigrationsJob/AuthService.MigrationsJob.csproj"
+COPY ["src/backend/services/AuthService/Directory.Build.props", "src/backend/services/AuthService/"]
+COPY ["src/backend/services/AuthService/tools/AuthService.MigrationsJob/AuthService.MigrationsJob.csproj", "src/backend/services/AuthService/tools/AuthService.MigrationsJob/"]
+COPY ["src/backend/services/AuthService/src/AuthService.Infrastructure.Postgres/AuthService.Infrastructure.Postgres.csproj", "src/backend/services/AuthService/src/AuthService.Infrastructure.Postgres/"]
+COPY ["src/backend/services/AuthService/src/AuthService.Application/AuthService.Application.csproj", "src/backend/services/AuthService/src/AuthService.Application/"]
+COPY ["src/backend/services/AuthService/src/AuthService.Contracts/AuthService.Contracts.csproj", "src/backend/services/AuthService/src/AuthService.Contracts/"]
+COPY ["src/backend/services/AuthService/src/AuthService.Domain/AuthService.Domain.csproj", "src/backend/services/AuthService/src/AuthService.Domain/"]
+COPY ["src/backend/services/AuthService/src/SharedKernel/SharedKernel.csproj", "src/backend/services/AuthService/src/SharedKernel/"]
+RUN dotnet restore "./src/backend/services/AuthService/tools/AuthService.MigrationsJob/AuthService.MigrationsJob.csproj"
 COPY . .
-WORKDIR "/src/tools/AuthService.MigrationsJob"
+WORKDIR "/src/src/backend/services/AuthService/tools/AuthService.MigrationsJob"
 RUN dotnet build "./AuthService.MigrationsJob.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
